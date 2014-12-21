@@ -16,75 +16,67 @@ namespace BullsAndCowsGame
             Other
         }
 
-        private const string WELCOME_MESSAGE = "Welcome to “Bulls and Cows” game. " +
-            "Please try to guess my secret 4-digit number." +
-            "Use 'top' to view the top scoreboard, 'restart' " +
-            "to start a new game and 'help' to cheat and 'exit' to quit the game.";
-        private const string WRONG_COMMAND_MESSAGE = "Incorrect guess or command!";
-        private const int NUMBER_LENGHT = 4;
+        private const int NumberLength = 4;
         private string helpPattern;
         private StringBuilder helpNumber;
         private string generatedNumber;
-        private klasirane<Player> Klasirane;
+        private rating<Player> rating;
 
         // Iuli
         public BullsAndCows()
         {
-            Klasirane = new klasirane<Player>();
+            rating = new rating<Player>();
         }
-        private void generateNumber()
+
+        private void GenerateNumber()
         {
-            StringBuilder num = new StringBuilder(4);
+            StringBuilder number = new StringBuilder(NumberLength);
             Random randomNumberGenerator = new Random(DateTime.Now.Millisecond);
 
-            for (int i = 0; i < NUMBER_LENGHT; i++)
+            for (int i = 0; i < NumberLength; i++)
             {
                 int randomDigit = randomNumberGenerator.Next(9);
-
-
-
-
-                num.Append(randomDigit);
+                number.Append(randomDigit);
             }
 
-            generatedNumber = num.ToString();
+            this.generatedNumber = number.ToString();
         }
+
         private PlayerCommand PlayerInputToPlayerCommand(string playerInput)
         {
-            if (playerInput.ToLower() == "top")
+            switch (playerInput.ToLower())
             {
-                return PlayerCommand.Top;
-            }
-            else if (playerInput.ToLower() == "restart")
-            {
-                return PlayerCommand.Restart;
-            }
-            else if (playerInput.ToLower() == "help")
-            {
-                return PlayerCommand.Help;
-            }
-            else if (playerInput.ToLower() == "exit")
-            {
-                return PlayerCommand.Exit;
-            }
-            else
-            {
-                return PlayerCommand.Other;
+                case "top":
+                {
+                    return PlayerCommand.Top;
+                }
+                case "restart":
+                {
+                    return PlayerCommand.Restart;
+                }
+                case "help":
+                {
+                    return PlayerCommand.Help;
+                }
+                case "exit":
+                {
+                    return PlayerCommand.Exit;
+                }
+                default:
+                {
+                    return PlayerCommand.Other;
+                }
             }
         }
 
         private void PrintWelcomeMessage()
         {
-            Console.WriteLine(WELCOME_MESSAGE);
-
-
-
-
+            Console.WriteLine(MessageManager.WelcomeMessage());
         }
 
         private void PrintWrongCommandMessage()
         {
-            Console.WriteLine(WRONG_COMMAND_MESSAGE);
+            Console.WriteLine(MessageManager.WrongCommandMessage());
         }
 
         // Tsvety
@@ -111,12 +103,8 @@ namespace BullsAndCowsGame
             do
             {
                 PrintWelcomeMessage();
-                generateNumber();
+                GenerateNumber();
                 int attempts = 0;
-
-
-
-
                 int cheats = 0;
                 helpNumber = new StringBuilder("XXXX");
                 helpPattern = null;
@@ -142,7 +130,7 @@ namespace BullsAndCowsGame
                             int bullsCount;
                             int cowsCount;
                             CalculateBullsAndCowsCount(playerInput, generatedNumber, out bullsCount, out cowsCount);
-                            if (bullsCount == NUMBER_LENGHT)
+                            if (bullsCount == NumberLength)
                             {
                                 PrintCongratulateMessage(attempts, cheats);
                                 FinishGame(attempts, cheats);
@@ -249,7 +237,7 @@ namespace BullsAndCowsGame
 
         private bool IsValidInput(string playerInput)
         {
-            if (playerInput == String.Empty || playerInput.Length != NUMBER_LENGHT)
+            if (playerInput == String.Empty || playerInput.Length != NumberLength)
             {
                 return false;
             }
@@ -282,12 +270,12 @@ namespace BullsAndCowsGame
         private void AddPlayerToScoreboard(string playerName, int attempts)
         {
             Player player = new Player(playerName, attempts);
-            Klasirane.Add(player);
+            rating.Add(player);
         }
 
         private void PrintScoreboard()
         {
-            if (Klasirane.Count == 0)
+            if (rating.Count == 0)
             {
                 Console.WriteLine("Top scoreboard is empty.");
             }
@@ -295,7 +283,7 @@ namespace BullsAndCowsGame
             {
                 Console.WriteLine("Scoreboard:");
                 int i = 1;
-                foreach (Player p in Klasirane)
+                foreach (Player p in rating)
                 {
                     Console.WriteLine("{0}. {1} --> {2} guess" + ((p.Attempts == 1)?"":"es"), i++, p.Name, p.Attempts);
                 }

@@ -7,7 +7,7 @@ namespace BullsAndCowsGame
 {
 //tova raboti - testvano e, NE PIPAJJJJ!!!!!!!!
     // Luboslav
-    class klasirane<T> : IEnumerable<T>, IEnumerator<T> where T : IComparable<T>
+    class rating<T> : IEnumerable<T>, IEnumerator<T> where T : IComparable<T>
     {
         private int maxCountOfStoredData;
         private T[] data;
@@ -19,9 +19,9 @@ namespace BullsAndCowsGame
             get { return this.count; }
         }
 
-        public klasirane() : this(5) { }
+        public rating() : this(5) { }
 
-        public klasirane(int aMaxCountOfStoredData)
+        public rating(int aMaxCountOfStoredData)
         {
             maxCountOfStoredData = aMaxCountOfStoredData;
             data = new T[maxCountOfStoredData];
