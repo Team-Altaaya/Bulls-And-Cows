@@ -42,7 +42,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="bikove_i_kravi.cs" />
+    <Compile Include="BullsAndCows.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="klasirane.cs" />
   </ItemGroup>
