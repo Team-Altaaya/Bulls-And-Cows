@@ -6,6 +6,7 @@ using System.Text;
 namespace BullsAndCowsGame
 {
 //tova raboti - testvano e, NE PIPAJJJJ!!!!!!!!
+    // Luboslav
     class klasirane<T> : IEnumerable<T>, IEnumerator<T> where T : IComparable<T>
     {
         private int maxCountOfStoredData;

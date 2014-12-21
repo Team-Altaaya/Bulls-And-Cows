@@ -27,6 +27,7 @@ namespace BullsAndCowsGame
         private string generatedNumber;
         private klasirane<Player> Klasirane;
 
+        // Iuli
         public bikove_i_kravi()
         {
             Klasirane = new klasirane<Player>();
@@ -86,6 +87,7 @@ namespace BullsAndCowsGame
             Console.WriteLine(WRONG_COMMAND_MESSAGE);
         }
 
+        // Tsvety
         private void PrintCongratulateMessage(int attempts, int cheats)
         {
             Console.Write("Congratulations! You guessed the secret number in {0} attempts", attempts);
@@ -210,6 +212,7 @@ namespace BullsAndCowsGame
             helpPattern = helpPaterns[randomPaternNumber];
         }
 
+        // Andrei
         private void CalculateBullsAndCowsCount(string playerInput, string generatedNumber, out int bullsCount, out int cowsCount)
         {
             bullsCount = 0;
