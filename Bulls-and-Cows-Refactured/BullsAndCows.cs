@@ -13,7 +13,8 @@ namespace BullsAndCowsGame
             Restart,
             Help,
             Exit,
-            Other
+            Other,
+            Guess
         }
 
         private const int NumberLength = 4;
@@ -64,6 +65,10 @@ namespace BullsAndCowsGame
                 }
                 default:
                 {
+                    if (IsValidInput(playerInput))
+                    {
+                        return PlayerCommand.Guess;
+                    }
                     return PlayerCommand.Other;
                 }
             }
@@ -71,30 +76,18 @@ namespace BullsAndCowsGame
 
         private void PrintWelcomeMessage()
         {
-            Console.WriteLine(MessageManager.WelcomeMessage());
+            MessageManager.WelcomeMessage();
         }
 
         private void PrintWrongCommandMessage()
         {
-            Console.WriteLine(MessageManager.WrongCommandMessage());
+            MessageManager.WrongCommandMessage();
         }
 
         // Tsvety
         private void PrintCongratulateMessage(int attempts, int cheats)
         {
-            Console.Write("Congratulations! You guessed the secret number in {0} attempts", attempts);
-            if (cheats == 0)
-            {
-
-
-
-
-                Console.WriteLine(".");
-            }
-            else
-            {
-                Console.WriteLine(" and {0} cheats.", cheats);
-            }
+            MessageManager.CongratulateMessage(attempts, cheats);
         }
 
         public void Start()
@@ -106,13 +99,64 @@ namespace BullsAndCowsGame
                 GenerateNumber();
                 int attempts = 0;
                 int cheats = 0;
-                helpNumber = new StringBuilder("XXXX");
+                helpNumber = new StringBuilder(new String('X', NumberLength));
                 helpPattern = null;
                 do
                 {
-                    Console.Write("Enter your guess or command: ");
+                    MessageManager.EnterCommandMessage();
                     string playerInput = Console.ReadLine();
                     enteredCommand = PlayerInputToPlayerCommand(playerInput);
+
+                    //switch (enteredCommand)
+                    //{
+                    //    case PlayerCommand.Top:
+                    //    {
+                    //        PrintScoreboard();
+                    //        break;
+                    //    }
+                    //    case PlayerCommand.Help:
+                    //    {
+                    //        cheats = PokajiHelp(cheats);
+                    //        break;
+                    //    }
+                    //    case PlayerCommand.Guess:
+                    //    {
+                    //            attempts++;
+                    //            int bullsCount;
+                    //            int cowsCount;
+                    //            CalculateBullsAndCowsCount(playerInput, generatedNumber, out bullsCount, out cowsCount);
+                    //            if (bullsCount == NumberLength)
+                    //            {
+                    //                PrintCongratulateMessage(attempts, cheats);
+                    //                FinishGame(attempts, cheats);
+                    //                break;
+                    //            }
+                    //            else
+                    //            {
+                    //                Console.WriteLine("Wrong number! Bulls: {0}, Cows: {1}", bullsCount, cowsCount);
+                    //            }
+                    //        break;
+                    //    }
+                    //    case PlayerCommand.Restart:
+                    //    {
+                    //        // TODO
+                    //        break;
+                    //    }
+                    //    case PlayerCommand.Exit:
+                    //    {
+                    //        // TODO
+                    //        break;
+                    //    }
+                    //    case PlayerCommand.Other:
+                    //    {
+                    //        PrintWrongCommandMessage();
+                    //        break;
+                    //    }
+                    //    default:
+                    //    {
+                    //        throw new NotImplementedException();
+                    //    }
+                    //}
 
                     if (enteredCommand == PlayerCommand.Top)
                     {
@@ -163,20 +207,22 @@ namespace BullsAndCowsGame
             while (enteredCommand != PlayerCommand.Exit);
             Console.WriteLine("Good bye!");
         }
+
         private int PokajiHelp(int cheats)
         {
             if (cheats < 4)
             {
                 RevealDigit(cheats);
                 cheats++;
-                Console.WriteLine("The number looks like {0}.", helpNumber);
+                MessageManager.HelpMessage(this.helpNumber.ToString());
             }
             else
             {
-                Console.WriteLine("You are not allowed to ask for more help!");
+                MessageManager.NoMoreHelpMessage();
             }
             return cheats;
         }
+
         private void RevealDigit(int cheats)
         {
             if (helpPattern == null)
