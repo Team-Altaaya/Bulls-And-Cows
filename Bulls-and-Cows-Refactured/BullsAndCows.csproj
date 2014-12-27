@@ -43,9 +43,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BullsAndCows.cs" />
+    <Compile Include="GameEngine.cs" />
+    <Compile Include="Interfases\IRandomGenerator.cs" />
     <Compile Include="MessageManager.cs" />
     <Compile Include="Player.cs" />
-    <Compile Include="klasirane.cs" />
+    <Compile Include="PlayerCommand.cs" />
+    <Compile Include="RandomNumberGenerator.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

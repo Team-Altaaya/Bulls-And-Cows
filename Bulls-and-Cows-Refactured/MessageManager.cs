@@ -1,8 +1,8 @@
-﻿using System;
-
-namespace BullsAndCowsGame
+﻿namespace BullsAndCowsGame
 {
-    class MessageManager
+    using System;
+
+    public static class MessageManager
     {
         public static void WelcomeMessage()
         {
