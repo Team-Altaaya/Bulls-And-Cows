@@ -13,6 +13,11 @@
 
         public string Generate(int numberLength)
         {
+            if (numberLength < 0 )
+            {
+                throw new ArgumentException("Arguments cannot be negative numbers.");
+            }
+
             StringBuilder number = new StringBuilder(numberLength);
             Random randomNumberGenerator = new Random(DateTime.Now.Millisecond);
 
@@ -25,12 +30,24 @@
             return number.ToString();
         }
 
-        public string GenerateNumberByDigits(int numberLenght, int digitMin, int digitMax)
+        public string GenerateNumberByDigits(int numberLength, int digitMin, int digitMax)
         {
-            List<int> numberList = new List<int>(numberLenght);
-            StringBuilder number = new StringBuilder(numberLenght);
+            if (numberLength < 0 || digitMin < 0 || digitMax < 0)
+            {
+                throw new ArgumentException("Arguments cannot be negative numbers.");
+            }
 
-            for (int i = 0; i < numberLenght; i++)
+            if (numberLength > digitMin + digitMax + 1)
+            {
+                throw new ArgumentException("This method is designed to return number(string) " +
+               "with different digits. Cannot calculate number with length " + numberLength +
+               " in range " + (digitMin + digitMax + 1) + " (digitMin + digitMax + 1)");
+            }
+
+            List<int> numberList = new List<int>(numberLength);
+            StringBuilder number = new StringBuilder(numberLength);
+
+            for (int i = 0; i < numberLength; i++)
             {
                 Random r = new Random(DateTime.Now.Millisecond);
                 int randomDigit = r.Next(digitMin, digitMax + 1);

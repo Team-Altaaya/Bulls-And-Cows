@@ -54,6 +54,7 @@
     <Compile Include="FakeClasses\FakeNumberGenerator.cs" />
     <Compile Include="GameEngineTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RandomNumberGeneratorTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Bulls-and-Cows-Refactured\BullsAndCows.csproj">
