@@ -184,23 +184,13 @@
                 this.GenerateHelpPattern();
             }
 
-            int digitToReveal = this.helpPattern[cheats] - '0';
-            this.helpNumber[digitToReveal - 1] = this.generatedNumber[digitToReveal - 1];
+            int digitToReveal = int.Parse(this.helpPattern[cheats] + string.Empty); //this.helpPattern[chears] is char + empty == string
+            this.helpNumber[digitToReveal] = this.generatedNumber[digitToReveal];
         }
 
         private void GenerateHelpPattern()
         {
-            string[] helpPaterns = 
-            {
-                "1234", "1243", "1324", "1342", "1432", "1423",
-                "2134", "2143", "2314", "2341", "2431", "2413",
-                "3214", "3241", "3124", "3142", "3412", "3421",
-                "4231", "4213", "4321", "4312", "4132", "4123"
-            };
-
-            Random randomNumberGenerator = new Random(DateTime.Now.Millisecond);
-            int randomPaternNumber = randomNumberGenerator.Next(helpPaterns.Length - 1);
-            this.helpPattern = helpPaterns[randomPaternNumber];
+            this.helpPattern = this.generator.GenerateNumberByDigits(4, 0, 3);
         }
 
         private void CalculateBullsAndCowsCount(string playerInput, string generatedNumber, out int bullsCount, out int cowsCount)
