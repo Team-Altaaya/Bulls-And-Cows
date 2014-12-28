@@ -1,12 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using BullsAndCowsGame.Interfases;
-
-namespace BullsAndCowsGame
+﻿namespace BullsAndCowsGame
 {
-    class GameEngine
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
+    using BullsAndCowsGame.Interfases;
+
+    public class GameEngine
     {
         private const int NumberLength = 4;
         private const int ScoreBoardSize = 5;
@@ -16,64 +16,11 @@ namespace BullsAndCowsGame
         private List<Player> scoreboard;
         private IRandomGenerator generator;
 
-
         // Iuli
         public GameEngine(IRandomGenerator generator)
         {
-            scoreboard = new List<Player>();
+            this.scoreboard = new List<Player>();
             this.generator = generator;
-        }
-
-        private void GenerateNumber()
-        {
-            this.generatedNumber = this.generator.Generate(NumberLength);
-        }
-
-        private PlayerCommand PlayerInputToPlayerCommand(string playerInput)
-        {
-            switch (playerInput.ToLower())
-            {
-                case "top":
-                    {
-                        return PlayerCommand.Top;
-                    }
-                case "restart":
-                    {
-                        return PlayerCommand.Restart;
-                    }
-                case "help":
-                    {
-                        return PlayerCommand.Help;
-                    }
-                case "exit":
-                    {
-                        return PlayerCommand.Exit;
-                    }
-                default:
-                    {
-                        if (IsValidInput(playerInput))
-                        {
-                            return PlayerCommand.Guess;
-                        }
-                        return PlayerCommand.Other;
-                    }
-            }
-        }
-
-        private void PrintWelcomeMessage()
-        {
-            MessageManager.WelcomeMessage();
-        }
-
-        private void PrintWrongCommandMessage()
-        {
-            MessageManager.WrongCommandMessage();
-        }
-
-        // Tsvety
-        private void PrintCongratulateMessage(int attempts, int cheats)
-        {
-            MessageManager.CongratulateMessage(attempts, cheats);
         }
 
         public void Start()
@@ -81,17 +28,17 @@ namespace BullsAndCowsGame
             PlayerCommand enteredCommand;
             do
             {
-                PrintWelcomeMessage();
-                GenerateNumber();
+                this.PrintWelcomeMessage();
+                this.GenerateNumber();
                 int attempts = 0;
                 int cheats = 0;
-                helpNumber = new StringBuilder(new String('X', NumberLength));
-                helpPattern = null;
+                this.helpNumber = new StringBuilder(new string('X', NumberLength));
+                this.helpPattern = null;
                 do
                 {
                     MessageManager.EnterCommandMessage();
                     string playerInput = Console.ReadLine();
-                    enteredCommand = PlayerInputToPlayerCommand(playerInput);
+                    enteredCommand = this.PlayerInputToPlayerCommand(playerInput);
 
                     //switch (enteredCommand)
                     //{
@@ -146,29 +93,25 @@ namespace BullsAndCowsGame
 
                     if (enteredCommand == PlayerCommand.Top)
                     {
-                        PrintScoreboard();
+                        this.PrintScoreboard();
                     }
                     else if (enteredCommand == PlayerCommand.Help)
                     {
-                        cheats = PokajiHelp(cheats);
+                        cheats = this.ShowHelp(cheats);
                     }
                     else
                     {
-                        if (IsValidInput(playerInput))
+                        if (this.IsValidInput(playerInput))
                         {
                             attempts++;
                             int bullsCount;
                             int cowsCount;
-                            CalculateBullsAndCowsCount(playerInput, generatedNumber, out bullsCount, out cowsCount);
+                            this.CalculateBullsAndCowsCount(playerInput, this.generatedNumber, out bullsCount, out cowsCount);
                             if (bullsCount == NumberLength)
                             {
-                                PrintCongratulateMessage(attempts, cheats);
-                                FinishGame(attempts, cheats);
+                                this.PrintCongratulateMessage(attempts, cheats);
+                                this.FinishGame(attempts, cheats);
                                 break;
-
-
-
-
                             }
                             else
                             {
@@ -179,12 +122,9 @@ namespace BullsAndCowsGame
                         {
                             if (enteredCommand != PlayerCommand.Restart && enteredCommand != PlayerCommand.Exit)
                             {
-                                PrintWrongCommandMessage();
+                                this.PrintWrongCommandMessage();
                             }
                         }
-
-
-
                     }
                 }
                 while (enteredCommand != PlayerCommand.Exit && enteredCommand != PlayerCommand.Restart);
@@ -194,11 +134,64 @@ namespace BullsAndCowsGame
             Console.WriteLine("Good bye!");
         }
 
-        private int PokajiHelp(int cheats)
+        private void GenerateNumber()
+        {
+            this.generatedNumber = this.generator.Generate(NumberLength);
+        }
+
+        private PlayerCommand PlayerInputToPlayerCommand(string playerInput)
+        {
+            PlayerCommand result;
+            switch (playerInput.ToLower())
+            {
+                case "top":
+                    result = PlayerCommand.Top;
+                    break;
+                case "restart":
+                    result = PlayerCommand.Restart;
+                    break;
+                case "help":
+                    result = PlayerCommand.Help;
+                    break;
+                case "exit":
+                    result = PlayerCommand.Exit;
+                    break;
+                default:
+                    if (this.IsValidInput(playerInput))
+                    {
+                        result = PlayerCommand.Guess;
+                    }
+                    else
+                    {
+                        result = PlayerCommand.Other;
+                    }
+                    break;
+            }
+
+            return result;
+        }
+
+        private void PrintWelcomeMessage()
+        {
+            MessageManager.WelcomeMessage();
+        }
+
+        private void PrintWrongCommandMessage()
+        {
+            MessageManager.WrongCommandMessage();
+        }
+
+        // Tsvety
+        private void PrintCongratulateMessage(int attempts, int cheats)
+        {
+            MessageManager.CongratulateMessage(attempts, cheats);
+        }
+
+        private int ShowHelp(int cheats)
         {
             if (cheats < 4)
             {
-                RevealDigit(cheats);
+                this.RevealDigit(cheats);
                 cheats++;
                 MessageManager.HelpMessage(this.helpNumber.ToString());
             }
@@ -206,30 +199,34 @@ namespace BullsAndCowsGame
             {
                 MessageManager.NoMoreHelpMessage();
             }
+
             return cheats;
         }
 
         private void RevealDigit(int cheats)
         {
-            if (helpPattern == null)
+            if (this.helpPattern == null)
             {
-                generateHelpPattern();
+                this.GenerateHelpPattern();
             }
-            int digitToReveal = helpPattern[cheats] - '0';
-            helpNumber[digitToReveal - 1] = generatedNumber[digitToReveal - 1];
+
+            int digitToReveal = this.helpPattern[cheats] - '0';
+            this.helpNumber[digitToReveal - 1] = this.generatedNumber[digitToReveal - 1];
         }
 
-        private void generateHelpPattern()
+        private void GenerateHelpPattern()
         {
-            string[] helpPaterns = {"1234", "1243", "1324", "1342", "1432", "1423",
+            string[] helpPaterns = 
+            {
+                "1234", "1243", "1324", "1342", "1432", "1423",
                 "2134", "2143", "2314", "2341", "2431", "2413",
                 "3214", "3241", "3124", "3142", "3412", "3421",
-                "4231", "4213", "4321", "4312", "4132", "4123",};
-
+                "4231", "4213", "4321", "4312", "4132", "4123"
+            };
 
             Random randomNumberGenerator = new Random(DateTime.Now.Millisecond);
             int randomPaternNumber = randomNumberGenerator.Next(helpPaterns.Length - 1);
-            helpPattern = helpPaterns[randomPaternNumber];
+            this.helpPattern = helpPaterns[randomPaternNumber];
         }
 
         // Andrei
@@ -269,18 +266,20 @@ namespace BullsAndCowsGame
 
         private bool IsValidInput(string playerInput)
         {
-            if (playerInput == String.Empty || playerInput.Length != NumberLength)
+            if (playerInput == string.Empty || playerInput.Length != NumberLength)
             {
                 return false;
             }
+
             for (int i = 0; i < playerInput.Length; i++)
             {
                 char currentChar = playerInput[i];
-                if (!Char.IsDigit(currentChar))
+                if (!char.IsDigit(currentChar))
                 {
                     return false;
                 }
             }
+
             return true;
         }
 
@@ -290,8 +289,8 @@ namespace BullsAndCowsGame
             {
                 Console.Write("Please enter your name for the top scoreboard: ");
                 string playerName = Console.ReadLine();
-                AddPlayerToScoreboard(playerName, attempts);
-                PrintScoreboard();
+                this.AddPlayerToScoreboard(playerName, attempts);
+                this.PrintScoreboard();
             }
             else
             {
@@ -302,30 +301,25 @@ namespace BullsAndCowsGame
         private void AddPlayerToScoreboard(string playerName, int attempts)
         {
             Player player = new Player(playerName, attempts);
-            scoreboard.Add(player);
+            this.scoreboard.Add(player);
         }
 
         private void PrintScoreboard()
         {
-            if (scoreboard.Count == 0)
+            if (this.scoreboard.Count == 0)
             {
                 Console.WriteLine("Top scoreboard is empty.");
             }
             else
             {
                 Console.WriteLine("Scoreboard:");
-                scoreboard.Sort();
-                int scoreBoardEnd = Math.Min(scoreboard.Count, ScoreBoardSize);
+                this.scoreboard.Sort();
+                int scoreBoardEnd = Math.Min(this.scoreboard.Count, ScoreBoardSize);
 
                 for (int i = 0; i < scoreBoardEnd; i++)
                 {
-                    Console.WriteLine("{0}. {1} --> {2} guess" + ((scoreboard[i].Attempts == 1) ? "" : "es"), i + 1, scoreboard[i].Name, scoreboard[i].Attempts);
+                    Console.WriteLine("{0}. {1} --> {2} guess" + ((this.scoreboard[i].Attempts == 1) ? string.Empty : "es"), i + 1, this.scoreboard[i].Name, this.scoreboard[i].Attempts);
                 }
-
-                //foreach (Player p in scoreboard)
-                //{
-                //    Console.WriteLine("{0}. {1} --> {2} guess" + ((p.Attempts == 1) ? "" : "es"), i++, p.Name, p.Attempts);
-                //}
             }
         }
     }

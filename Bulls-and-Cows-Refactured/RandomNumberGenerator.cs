@@ -9,6 +9,7 @@
         public RandomNumberGenerator()
         {
         }
+
         public string Generate(int numberLength)
         {
             StringBuilder number = new StringBuilder(numberLength);

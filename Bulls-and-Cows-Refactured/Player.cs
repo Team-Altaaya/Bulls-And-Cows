@@ -4,18 +4,18 @@
 
     public class Player : IComparable<Player>
     {
-        public string Name { get; set; }
-
-        public int Attempts { get; set; }
-
-        private DateTime TimeAdded { get; set; }
-
         public Player(string playerName, int attempts)
         {
             this.Name = playerName;
             this.Attempts = attempts;
             this.TimeAdded = DateTime.Now;
         }
+
+        public string Name { get; set; }
+
+        public int Attempts { get; set; }
+
+        private DateTime TimeAdded { get; set; }
 
         public int CompareTo(Player other)
         {
@@ -30,6 +30,7 @@
             {
                 value = other.TimeAdded.CompareTo(this.TimeAdded);
             }
+
             return value;
         }
     }

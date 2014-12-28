@@ -4,7 +4,7 @@
 
     public class BullsAndCows
     {
-        static void Main()
+        public static void Main()
         {
             IRandomGenerator generator = new RandomNumberGenerator();
             GameEngine game = new GameEngine(generator);
