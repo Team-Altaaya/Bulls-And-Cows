@@ -24,7 +24,7 @@
                 return 1;
             }
 
-            int value = other.Attempts - this.Attempts;
+            int value = this.Attempts - other.Attempts;
 
             if (value == 0)
             {

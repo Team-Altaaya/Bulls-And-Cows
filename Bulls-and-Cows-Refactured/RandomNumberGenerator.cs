@@ -2,7 +2,7 @@
 {
     using System;
     using System.Text;
-    using BullsAndCowsGame.Interfases;
+    using BullsAndCowsGame.Interfaces;
     using System.Collections.Generic;
 
     public class RandomNumberGenerator : IRandomGenerator

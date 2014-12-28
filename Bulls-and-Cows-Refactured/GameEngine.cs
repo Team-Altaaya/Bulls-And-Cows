@@ -4,13 +4,15 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Text;
-    using BullsAndCowsGame.Interfases;
+    using BullsAndCowsGame.Interfaces;
 
     public class GameEngine
     {
         private const int NumberLength = 4;
         private const int MaxCheats = 4;
         private const int ScoreBoardSize = 5;
+        private const int HelpPatternMinDigit = 0;
+        private const int HelpPatternMaxDigit = NumberLength - 1;
         private string helpPattern;
         private StringBuilder helpNumber;
         private string generatedNumber;
@@ -25,7 +27,7 @@
 
         public void NewGame()
         {
-            this.PrintWelcomeMessage();
+            MessageManager.WelcomeMessage();
             this.GenerateNumber();
             int attempts = 0;
             int cheats = 0;
@@ -62,7 +64,7 @@
                         this.CalculateBullsAndCowsCount(playerInput, generatedNumber, out bullsCount, out cowsCount);
                         if (bullsCount == NumberLength)
                         {
-                            this.PrintCongratulateMessage(attempts, cheats);
+                            MessageManager.CongratulateMessage(attempts, cheats);
                             this.FinishGame(attempts, cheats);
                             this.NewGame();
                             needNextMove = false;
@@ -89,7 +91,7 @@
                     }
                 case PlayerCommand.Other:
                     {
-                        PrintWrongCommandMessage();
+                        MessageManager.WrongCommandMessage();
                         break;
                     }
                 default:
@@ -111,7 +113,7 @@
 
         private void GenerateNumber()
         {
-            this.generatedNumber = this.generator.Generate(NumberLength);
+            this.generatedNumber = "0000";//this.generator.Generate(NumberLength);
         }
 
         private PlayerCommand PlayerInputToPlayerCommand(string playerInput)
@@ -146,21 +148,6 @@
             return result;
         }
 
-        private void PrintWelcomeMessage()
-        {
-            MessageManager.WelcomeMessage();
-        }
-
-        private void PrintWrongCommandMessage()
-        {
-            MessageManager.WrongCommandMessage();
-        }
-
-        private void PrintCongratulateMessage(int attempts, int cheats)
-        {
-            MessageManager.CongratulateMessage(attempts, cheats);
-        }
-
         private int ShowHelp(int cheats)
         {
             if (cheats < MaxCheats)
@@ -190,7 +177,7 @@
 
         private void GenerateHelpPattern()
         {
-            this.helpPattern = this.generator.GenerateNumberByDigits(4, 0, 3);
+            this.helpPattern = this.generator.GenerateNumberByDigits(NumberLength, HelpPatternMinDigit, HelpPatternMaxDigit);
         }
 
         private void CalculateBullsAndCowsCount(string playerInput, string generatedNumber, out int bullsCount, out int cowsCount)
@@ -250,14 +237,14 @@
         {
             if (cheats == 0)
             {
-                Console.Write("Please enter your name for the top scoreboard: ");
+                MessageManager.EnterNameToScoreboardMessage();
                 string playerName = Console.ReadLine();
                 this.AddPlayerToScoreboard(playerName, attempts);
                 this.PrintScoreboard();
             }
             else
             {
-                Console.WriteLine("You are not allowed to enter the top scoreboard.");
+                MessageManager.NotAllowedToEnterNameToScoreboardMessage();
             }
         }
 
@@ -271,7 +258,7 @@
         {
             if (this.scoreboard.Count == 0)
             {
-                Console.WriteLine("Top scoreboard is empty.");
+                MessageManager.ScoreboardIsEmptyMessage();
             }
             else
             {
@@ -281,7 +268,7 @@
 
                 for (int i = 0; i < scoreBoardEnd; i++)
                 {
-                    Console.WriteLine("{0}. {1} --> {2} guess" + ((this.scoreboard[i].Attempts == 1) ? string.Empty : "es"), i + 1, this.scoreboard[i].Name, this.scoreboard[i].Attempts);
+                    MessageManager.PrintScoreboard(i + 1, this.scoreboard[i].Attempts, this.scoreboard[i].Name);
                 }
             }
         }

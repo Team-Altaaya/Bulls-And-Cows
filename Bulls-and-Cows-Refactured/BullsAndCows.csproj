@@ -44,7 +44,7 @@
   <ItemGroup>
     <Compile Include="BullsAndCows.cs" />
     <Compile Include="GameEngine.cs" />
-    <Compile Include="Interfases\IRandomGenerator.cs" />
+    <Compile Include="Interfaces\IRandomGenerator.cs" />
     <Compile Include="MessageManager.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="PlayerCommand.cs" />

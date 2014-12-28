@@ -1,6 +1,6 @@
 ﻿namespace BullsAndCowsGame
 {
-    using BullsAndCowsGame.Interfases;
+    using BullsAndCowsGame.Interfaces;
 
     public class BullsAndCows
     {

@@ -49,5 +49,26 @@
         {
             Print("Enter your guess or command: ");
         }
+
+        public static void EnterNameToScoreboardMessage()
+        {
+            Print("Please enter your name for the top scoreboard: ");
+        }
+
+        public static void NotAllowedToEnterNameToScoreboardMessage()
+        {
+            PrintLine("You are not allowed to enter the top scoreboard.");
+        }
+
+        public static void ScoreboardIsEmptyMessage()
+        {
+            PrintLine("Top scoreboard is empty.");
+        }
+
+        public static void PrintScoreboard(int orderNumber, int attempts, string name)
+        {
+            string guessesWord = (attempts == 1) ? "guess" : "guesses";
+            Console.WriteLine("{0}. {1} --> {2} " + guessesWord, orderNumber, name, attempts);
+        }
     }
 }
