@@ -68,7 +68,7 @@
         public static void PrintScoreboard(int orderNumber, int attempts, string name)
         {
             string guessesWord = (attempts == 1) ? "guess" : "guesses";
-            Console.WriteLine("{0}. {1} --> {2} " + guessesWord, orderNumber, name, attempts);
+            PrintLine(string.Format("{0}. {1} --> {2} " + guessesWord, orderNumber, name, attempts));
         }
     }
 }

@@ -113,7 +113,7 @@
 
         private void GenerateNumber()
         {
-            this.generatedNumber = "0000";//this.generator.Generate(NumberLength);
+            this.generatedNumber = this.generator.Generate(NumberLength);
         }
 
         private PlayerCommand PlayerInputToPlayerCommand(string playerInput)
