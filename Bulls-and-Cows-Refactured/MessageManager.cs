@@ -1,8 +1,8 @@
-﻿using System;
-
-namespace BullsAndCowsGame
+﻿namespace BullsAndCowsGame
 {
-    class MessageManager
+    using System;
+
+    public static class MessageManager
     {
         public static void WelcomeMessage()
         {
@@ -19,7 +19,7 @@ namespace BullsAndCowsGame
 
         public static void CongratulateMessage(int attempts, int cheats)
         {
-            PrintLine(String.Format(
+            PrintLine(string.Format(
                 "Congratulations! You guessed the secret number in {0} attempts{1}",
                 attempts,
                 (cheats == 0) ? "." : " and " + cheats + " cheats."));
@@ -27,7 +27,7 @@ namespace BullsAndCowsGame
 
         public static void HelpMessage(string helpNumber)
         {
-            PrintLine(String.Format("The number looks like {0}.", helpNumber));
+            PrintLine(string.Format("The number looks like {0}.", helpNumber));
         }
 
         public static void NoMoreHelpMessage()
