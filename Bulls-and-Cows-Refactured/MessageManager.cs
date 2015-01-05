@@ -65,6 +65,11 @@
             PrintLine("Top scoreboard is empty.");
         }
 
+        public static void WrongNumberMessage(int bullsCount, int cowsCount)
+        {
+            PrintLine(string.Format("Wrong number! Bulls: {0}, Cows: {1}", bullsCount, cowsCount));
+        }
+
         public static void PrintScoreboard(int orderNumber, int attempts, string name)
         {
             string guessesWord = (attempts == 1) ? "guess" : "guesses";

@@ -13,11 +13,13 @@
         private const int ScoreBoardSize = 5;
         private const int HelpPatternMinDigit = 0;
         private const int HelpPatternMaxDigit = NumberLength - 1;
+        private const int StartAttempts = 0;
+        private const int StartCheatsUsed = 0;
         private string helpPattern;
         private StringBuilder helpNumber;
         private string generatedNumber;
         private List<Player> scoreboard;
-        private IRandomGenerator generator;
+        private readonly IRandomGenerator generator;
 
         public GameEngine(IRandomGenerator generator)
         {
@@ -29,12 +31,10 @@
         {
             MessageManager.WelcomeMessage();
             this.GenerateNumber();
-            int attempts = 0;
-            int cheats = 0;
             this.helpNumber = new StringBuilder(new string('X', NumberLength));
             this.helpPattern = null;
 
-            this.NewMove(attempts, cheats);
+            this.NewMove(StartAttempts, StartCheatsUsed);
         }
 
         public void NewMove(int attempts, int cheats)
@@ -71,7 +71,7 @@
                         }
                         else
                         {
-                            Console.WriteLine("Wrong number! Bulls: {0}, Cows: {1}", bullsCount, cowsCount);
+                            MessageManager.WrongNumberMessage(bullsCount, cowsCount);
                         }
                         break;
                     }
@@ -134,14 +134,7 @@
                     result = PlayerCommand.Exit;
                     break;
                 default:
-                    if (this.IsValidInput(playerInput))
-                    {
-                        result = PlayerCommand.Guess;
-                    }
-                    else
-                    {
-                        result = PlayerCommand.Other;
-                    }
+                    result = this.IsValidInput(playerInput) ? PlayerCommand.Guess : PlayerCommand.Other;
                     break;
             }
 
@@ -221,16 +214,7 @@
                 return false;
             }
 
-            for (int i = 0; i < playerInput.Length; i++)
-            {
-                char currentChar = playerInput[i];
-                if (!char.IsDigit(currentChar))
-                {
-                    return false;
-                }
-            }
-
-            return true;
+            return playerInput.All(char.IsDigit);
         }
 
         private void FinishGame(int attempts, int cheats)
