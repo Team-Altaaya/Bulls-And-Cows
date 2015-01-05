@@ -21,7 +21,6 @@ namespace BullsAndCowsTests
         public void GenerateMethodShouldReturnStringWithSpecificLength()
         {
             generator = Setup();
-
             int expected = 40;
             string number = generator.Generate(40);
 
@@ -32,7 +31,6 @@ namespace BullsAndCowsTests
         public void GenerateMethodShouldThrowExceptionWhenHaveNegativeParameter()
         {
             generator = Setup();
-
             string number = generator.Generate(-40);
         }
 
@@ -52,14 +50,12 @@ namespace BullsAndCowsTests
         public void GenerateNumberByDigitMethodShouldThrowExceptionWhenHaveNegativeFirstParameter()
         {
             generator = Setup();
-
             string number = generator.GenerateNumberByDigits(-4, 0, 5);
         }
         [TestMethod, ExpectedException(typeof(ArgumentException))]
         public void GenerateNumberByDigitMethodShouldThrowExceptionWhenHaveNegativeSecondParameter()
         {
             generator = Setup();
-
             string number = generator.GenerateNumberByDigits(10, -1, 5);
         }
 
@@ -67,7 +63,6 @@ namespace BullsAndCowsTests
         public void GenerateNumberByDigitMethodShouldThrowExceptionWhenHaveNegativeThridParameter()
         {
             generator = Setup();
-
             string number = generator.GenerateNumberByDigits(20, 0, -5);
         }
 
@@ -86,8 +81,6 @@ namespace BullsAndCowsTests
 
             string expected = "10";
             string number = generator.GenerateNumberByDigits(1, 10, 10);
-
-
             Assert.AreEqual(expected, number, "When upper and lower bound are equal the result should be lower/upper bound");
         }
     }

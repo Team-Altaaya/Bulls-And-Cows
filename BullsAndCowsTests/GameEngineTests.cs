@@ -21,7 +21,6 @@ namespace BullsAndCowsTests
             return gameEngine;
         }
 
-
         [TestMethod]
         public void NewGameShouldPrintWelcomeMessage()
         {

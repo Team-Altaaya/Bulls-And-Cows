@@ -33,7 +33,6 @@
             this.GenerateNumber();
             this.helpNumber = new StringBuilder(new string('X', NumberLength));
             this.helpPattern = null;
-
             this.NewMove(StartAttempts, StartCheatsUsed);
         }
 

@@ -26,7 +26,6 @@
                 int randomDigit = randomNumberGenerator.Next(9);
                 number.Append(randomDigit);
             }
-
             return number.ToString();
         }
 
@@ -62,12 +61,10 @@
                 }
             }
 
-
             for (int i = 0; i < numberList.Count; i++)
             {
                 number.Append(numberList[i]);
             }
-
             return number.ToString();
         }
     }

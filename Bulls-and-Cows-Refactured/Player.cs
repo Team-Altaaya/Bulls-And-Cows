@@ -30,7 +30,6 @@
             {
                 value = other.TimeAdded.CompareTo(this.TimeAdded);
             }
-
             return value;
         }
     }
