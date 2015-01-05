@@ -14,18 +14,19 @@ namespace BullsAndCowsTests
 
         GameEngine gameEngine;
 
-        private GameEngine Setup(string generateNumber, string helpPattern)
+        private GameEngine EngineSetup(string generateNumber, string helpPattern)
         {
             IRandomGenerator generator = new FakeNumberGenerator(generateNumber, helpPattern);
             gameEngine = new GameEngine(generator);
             return gameEngine;
         }
 
-        [TestMethod]
-        public void NewGameShouldPrintWelcomeMessage()
+        private string TestSetup(string secretNumber, string pattern, string input)
         {
-            gameEngine = Setup("1234", "0123");
-            StringReader sr = new StringReader("1334\nexit");
+            string result = "";
+
+            gameEngine = EngineSetup(secretNumber, pattern);
+            StringReader sr = new StringReader(input);
 
             using (sw)
             {
@@ -34,18 +35,25 @@ namespace BullsAndCowsTests
                     Console.SetOut(sw);
                     Console.SetIn(sr);
 
-                    // Act
                     gameEngine.NewGame();
-
-                    // Assert
-                    var result = sw.ToString();
-                    string expected =
-                             string.Format(
-                           "Welcome to “Bulls and Cows” game. Please try to guess my secret 4-digit number.Use 'top' to view the top scoreboard, 'restart' to start a new game and 'help' to cheat and 'exit' to quit the game.\r\nEnter your guess or command: Wrong number! Bulls: 3, Cows: 0\r\nEnter your guess or command: \r\nGood bye!\r\n");
-
-                    Assert.AreEqual<string>(expected, result);
+                    result = sw.ToString();
                 }
             }
+
+            return result;
+        }
+
+
+        [TestMethod]
+        public void NewGameShouldPrintWelcomeMessage()
+        {
+            var result = TestSetup("1234", "0123", "1334\nexit");
+
+            string expected =
+                 string.Format(
+            "Welcome to “Bulls and Cows” game. Please try to guess my secret 4-digit number.Use 'top' to view the top scoreboard, 'restart' to start a new game and 'help' to cheat and 'exit' to quit the game.\r\nEnter your guess or command: Wrong number! Bulls: 3, Cows: 0\r\nEnter your guess or command: \r\nGood bye!\r\n");
+
+            Assert.AreEqual<string>(expected, result);
         }
     }
 }

@@ -46,57 +46,55 @@
             switch (enteredCommand)
             {
                 case PlayerCommand.Top:
-                    {
-                        this.PrintScoreboard();
-                        break;
-                    }
+                {
+                    this.PrintScoreboard();
+                    break;
+                }
                 case PlayerCommand.Help:
-                    {
-                        cheats = this.ShowHelp(cheats);
-                        break;
-                    }
+                {
+                    cheats = this.ShowHelp(cheats);
+                    break;
+                }
                 case PlayerCommand.Guess:
+                {
+                    attempts++;
+                    int bullsCount = 0;
+                    int cowsCount = 0;
+                    this.CalculateBullsAndCowsCount(playerInput, generatedNumber, out bullsCount, out cowsCount);
+                    if (bullsCount == NumberLength)
                     {
-                        attempts++;
-                        int bullsCount;
-                        int cowsCount;
-                        this.CalculateBullsAndCowsCount(playerInput, generatedNumber, out bullsCount, out cowsCount);
-                        if (bullsCount == NumberLength)
-                        {
-                            MessageManager.CongratulateMessage(attempts, cheats);
-                            this.FinishGame(attempts, cheats);
-                            this.NewGame();
-                            needNextMove = false;
-                        }
-                        else
-                        {
-                            MessageManager.WrongNumberMessage(bullsCount, cowsCount);
-                        }
-                        break;
-                    }
-                case PlayerCommand.Restart:
-                    {
-                        Console.WriteLine();
+                        MessageManager.CongratulateMessage(attempts, cheats);
+                        this.FinishGame(attempts, cheats);
                         this.NewGame();
                         needNextMove = false;
-                        break;
                     }
+                    else
+                    {
+                        MessageManager.WrongNumberMessage(bullsCount, cowsCount);
+                    }
+                    break;
+                }
+                case PlayerCommand.Restart:
+                {     
+                    this.NewGame();
+                    needNextMove = false;
+                    break;
+                }
                 case PlayerCommand.Exit:
-                    {
-                        Console.WriteLine();
-                        Console.WriteLine("Good bye!");
-                        needNextMove = false;
-                        break;
-                    }
+                {
+                    MessageManager.Goodbye();
+                    needNextMove = false;
+                    break;
+                }
                 case PlayerCommand.Other:
-                    {
-                        MessageManager.WrongCommandMessage();
-                        break;
-                    }
+                {
+                    MessageManager.WrongCommandMessage();
+                    break;
+                }
                 default:
-                    {
-                        throw new NotImplementedException();
-                    }
+                {
+                    throw new NotImplementedException("Unknown PlayerCommand!");
+                }
             }
 
             if (needNextMove)
@@ -142,7 +140,7 @@
 
         private int ShowHelp(int cheats)
         {
-            if (cheats < MaxCheats)
+            if (cheats < GameEngine.MaxCheats)
             {
                 this.RevealDigit(cheats);
                 cheats++;
@@ -245,14 +243,9 @@
             }
             else
             {
-                Console.WriteLine("Scoreboard:");
                 this.scoreboard.Sort();
                 int scoreBoardEnd = Math.Min(this.scoreboard.Count, ScoreBoardSize);
-
-                for (int i = 0; i < scoreBoardEnd; i++)
-                {
-                    MessageManager.PrintScoreboard(i + 1, this.scoreboard[i].Attempts, this.scoreboard[i].Name);
-                }
+                MessageManager.PrintScoreboard(this.scoreboard, scoreBoardEnd);
             }
         }
     }
