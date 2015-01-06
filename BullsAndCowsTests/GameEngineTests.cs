@@ -57,7 +57,7 @@ namespace BullsAndCowsTests
 
             string expected =
                  string.Format(
-            "Welcome to “Bulls and Cows” game. Please try to guess my secret 4-digit number.Use 'top' to view the top scoreboard, 'restart' to start a new game and 'help' to cheat and 'exit' to quit the game.\r\nEnter your guess or command: Wrong number! Bulls: 3, Cows: 0\r\nEnter your guess or command: \r\nGood bye!\r\n");
+                "Welcome to “Bulls and Cows” game. Please try to guess my secret 4-digit number.Use 'top' to view the top scoreboard, 'restart' to start a new game and 'help' to cheat and 'exit' to quit the game.\r\nEnter your guess or command: Wrong number! Bulls: 3, Cows: 0\r\nEnter your guess or command: \r\nGood bye!\r\n");
 
             Assert.AreEqual<string>(expected, result);
         }
@@ -84,7 +84,7 @@ namespace BullsAndCowsTests
         [TestMethod]
         public void PlayerRestartTheGame()
         {
-            string result = TestSetup("1234", "5678", "restart\nexit");
+            string result = TestSetup("1234", "5678", "1234\nrestart\nexit");
 
             string expected =
                  string.Format(
@@ -96,7 +96,7 @@ namespace BullsAndCowsTests
         [TestMethod]
         public void PlayerEnterIncorrectCommand()
         {
-            string result = TestSetup("1234", "0123", "incorrectCommand");
+            string result = TestSetup("1234", "0123", "incorrectCommand\nexit");
 
             string expected =
                 string.Format(WelcomeMessage +
@@ -109,6 +109,24 @@ namespace BullsAndCowsTests
                               "Good Bye!" + Environment.NewLine);
 
             Assert.AreEqual<string>(expected, result);
+        }
+
+        [TestMethod]
+        public void PlayerUsedFourCheatsHaveNoMoreHelp()
+        {
+            int expected = 4;
+            int actual = GameEngine.MaxCheats;
+
+            Assert.AreEqual<int>(expected, actual, "You are not allowed to ask for more help");
+        }
+
+        [TestMethod]
+        public void PlayerDontUsedFourCheatsCanAskForMoreHelp()
+        {
+            int expected = 4;
+            int actual = 2;
+
+            Assert.AreNotEqual<int>(expected, actual, "You have two more chances to use help");
         }
     }
 }
