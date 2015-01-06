@@ -55,5 +55,23 @@ namespace BullsAndCowsTests
 
             Assert.AreEqual<string>(expected, result);
         }
+
+        [TestMethod]
+        public void PlayerRestartTheGame()
+        {
+            var result = TestSetup("1234", "5678", "restart");
+
+            string expected =
+                 string.Format(
+            "Welcome to “Bulls and Cows” game. Please try to guess my secret 4-digit number.Use 'top' to view the top scoreboard, 'restart' to start a new game and 'help' to cheat and 'exit' to quit the game.\r\nEnter your guess or command: Wrong number! Bulls: 3, Cows: 0\r\nEnter your guess or command: \r\nGood bye!\r\n");
+
+            Assert.AreEqual<string>(expected, result);
+        }
+
+        [TestMethod]
+        public void PlayerEnterIncorrectCommand()
+        {
+
+        }
     }
 }
