@@ -12,7 +12,19 @@ namespace BullsAndCowsTests
     {
         StringWriter sw = new StringWriter();
 
+		private const string WelcomeMessage = "Welcome to “Bulls and Cows” game. " +
+                                              "Please try to guess my secret 4-digit number." +
+                                              "Use 'top' to view the top scoreboard, 'restart' " +
+                                              "to start a new game and 'help' to cheat and 'exit' to quit the game.";
+        private const string EnterGuess = "Enter your guess or command: ";
+		
         GameEngine gameEngine;
+
+        private const string WelcomeMessage = "Welcome to “Bulls and Cows” game. " +
+                                              "Please try to guess my secret 4-digit number." +
+                                              "Use 'top' to view the top scoreboard, 'restart' " +
+                                              "to start a new game and 'help' to cheat and 'exit' to quit the game.";
+        private const string EnterGuess = "Enter your guess or command: ";
 
         private GameEngine EngineSetup(string generateNumber, string helpPattern)
         {
@@ -53,6 +65,25 @@ namespace BullsAndCowsTests
                  string.Format(
             "Welcome to “Bulls and Cows” game. Please try to guess my secret 4-digit number.Use 'top' to view the top scoreboard, 'restart' to start a new game and 'help' to cheat and 'exit' to quit the game.\r\nEnter your guess or command: Wrong number! Bulls: 3, Cows: 0\r\nEnter your guess or command: \r\nGood bye!\r\n");
 
+            Assert.AreEqual<string>(expected, result);
+        }
+
+        [TestMethod]
+        public void CorrectGuessWithoutUsingCheatsShouldAllowPlayerToWriteNameInScoreboard()
+        {
+            string result = TestSetup("1234", "0123", "1234\ntsvety\nexit");
+            
+            string expected =
+                string.Format(WelcomeMessage +
+                              EnterGuess +
+                              "Congratulations! You guessed the secret number in 1 attempts.\n" +
+                              "Please enter your name for the top scoreboard: " +
+                              "Scoreboard:\n" +
+                              "1. tsvety --> 1 guess\n" +
+                              WelcomeMessage +
+                              EnterGuess +
+                              "Good Bye!"+Environment.NewLine);
+           
             Assert.AreEqual<string>(expected, result);
         }
 
