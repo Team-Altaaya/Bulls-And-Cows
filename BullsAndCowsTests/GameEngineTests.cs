@@ -164,12 +164,25 @@ namespace BullsAndCowsTests
         }
 
         [TestMethod]
-        public void PlayerDontUsedFourCheatsCanAskForMoreHelp()
+        public void PlayerUsedTwoCheatsAndExit()
         {
-            int expected = 4;
-            int actual = 2;
+            var result = TestSetup("1234", "0123", "help\r\n5445\r\n1234\r\nexit");
 
-            Assert.AreNotEqual<int>(expected, actual, "You have two more chances to use help");
+            string expected =
+                 string.Format(
+               "Welcome to “Bulls and Cows” game. Please try to guess my secret 4-digit number.Use 'top' to view the top scoreboard, 'restart' to start a new game and 'help' to cheat and 'exit' to quit the game.\r\n"
+               + "Enter your guess or command: "
+               + "The number looks like 1XXX.\r\n"
+               + "Enter your guess or command: "
+               + "The number looks like 1X3X.\r\n"
+               + "Enter your guess or command: "
+               + "Congratulations! You guessed the secret number in 1 attempts and 1 cheats.\r\n"
+               + "You are not allowed to enter the top scoreboard.\r\n"
+               + "Welcome to “Bulls and Cows” game. Please try to guess my secret 4-digit number.Use 'top' to view the top scoreboard, 'restart' to start a new game and 'help' to cheat and 'exit' to quit the game.\r\n"
+               + "Enter your guess or command: "
+               + "Good Bye!\r\n");
+
+            Assert.AreEqual<string>(expected, result);
         }
     }
 }
