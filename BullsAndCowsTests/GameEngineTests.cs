@@ -51,7 +51,7 @@ namespace BullsAndCowsTests
 
 
         [TestMethod]
-        public void Scenario1WrongNumberAndExit()
+        public void WrongNumberAndExit()
         {
             var result = TestSetup("1234", "0123", "1334\r\nexit");
 
@@ -67,7 +67,7 @@ namespace BullsAndCowsTests
         }
 
         [TestMethod]
-        public void Scenario2RightNumberEnterNameToScoreBoardAndExit()
+        public void RightNumberEnterNameToScoreBoardAndExit()
         {
             var result = TestSetup("1234", "0123", "1234\r\nandrei\r\nexit");
 
@@ -86,7 +86,7 @@ namespace BullsAndCowsTests
         }
 
         [TestMethod]
-        public void Scenario3CheatCorrectNumberAndExit()
+        public void CheatCorrectNumberAndExit()
         {
             var result = TestSetup("1234", "0123", "help\r\n1234\r\nexit");
 
@@ -101,26 +101,6 @@ namespace BullsAndCowsTests
                + "Welcome to “Bulls and Cows” game. Please try to guess my secret 4-digit number.Use 'top' to view the top scoreboard, 'restart' to start a new game and 'help' to cheat and 'exit' to quit the game.\r\n"
                + "Enter your guess or command: "
                + "Good Bye!\r\n");
-
-            Assert.AreEqual<string>(expected, result);
-        }
-
-        [TestMethod]
-        public void CorrectGuessWithoutUsingCheatsShouldAllowPlayerToWriteNameInScoreboard()
-        {
-            var result = TestSetup("1234", "0123", "1234\r\ntsvety\r\nexit\r\n");
-
-            string expected =
-                 string.Format(
-                WelcomeMessage + "\r\n" +
-                              EnterGuess 
-                + "Congratulations! You guessed the secret number in 1 attempts."+"\r\n"
-                + "Please enter your name for the top scoreboard: "
-                + "Scoreboard:"+"\r\n"
-                + "1. tsvety --> 1 guess\r\n"+
-                WelcomeMessage + "\r\n" +
-                              EnterGuess 
-                + "Good Bye!"+"\r\n");
 
             Assert.AreEqual<string>(expected, result);
         }
@@ -146,7 +126,7 @@ namespace BullsAndCowsTests
             string result = TestSetup("1234", "0123", "incorrectCommand\nexit");
 
             string expected =
-                string.Format(WelcomeMessage + "\r\n"+
+                string.Format(WelcomeMessage + "\r\n" +
                               EnterGuess +
                               "Incorrect guess or command!\r\n" +
                               EnterGuess +
@@ -165,7 +145,7 @@ namespace BullsAndCowsTests
             string expected =
                  string.Format(
               WelcomeMessage + "\r\n" +
-                              EnterGuess 
+                              EnterGuess
                + "The number looks like 1XXX.\r\n"
                + EnterGuess
                + "The number looks like 12XX.\r\n"
@@ -174,7 +154,23 @@ namespace BullsAndCowsTests
                + "You are not allowed to enter the top scoreboard.\r\n"
                + WelcomeMessage + "\r\n"
                + EnterGuess
-               + "Good Bye!"+"\r\n");
+               + "Good Bye!" + "\r\n");
+
+            Assert.AreEqual<string>(expected, result);
+        }
+
+        [TestMethod]
+        public void WrongNumberShouldReturnBullsAndCowsCount()
+        {
+            var result = TestSetup("1234", "0123", "2314\r\nexit");
+
+            string expected =
+                 string.Format(
+                "Welcome to “Bulls and Cows” game. Please try to guess my secret 4-digit number.Use 'top' to view the top scoreboard, 'restart' to start a new game and 'help' to cheat and 'exit' to quit the game.\r\n"
+                + "Enter your guess or command: "
+                + "Wrong number! Bulls: 1, Cows: 3\r\n"
+                + "Enter your guess or command: "
+                + "Good Bye!\r\n");
 
             Assert.AreEqual<string>(expected, result);
         }

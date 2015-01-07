@@ -7,10 +7,6 @@
 
     public class RandomNumberGenerator : IRandomGenerator
     {
-        public RandomNumberGenerator()
-        {
-        }
-
         public string Generate(int numberLength)
         {
             if (numberLength < 0 )

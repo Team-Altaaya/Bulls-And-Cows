@@ -26,6 +26,10 @@
             this.scoreboard = new List<Player>();
             this.generator = generator;
         }
+        public void Start()
+        {
+            this.NewGame();
+        }
 
         public void NewGame()
         {
@@ -36,7 +40,7 @@
             this.NewMove(StartAttempts, StartCheatsUsed);
         }
 
-        public void NewMove(int attempts, int cheats)
+        private void NewMove(int attempts, int cheats)
         {
             MessageManager.EnterCommandMessage();
             string playerInput = Console.ReadLine();
@@ -101,11 +105,6 @@
             {
                 this.NewMove(attempts, cheats);
             }
-        }
-
-        public void Start()
-        {
-            this.NewGame();
         }
 
         private void GenerateNumber()

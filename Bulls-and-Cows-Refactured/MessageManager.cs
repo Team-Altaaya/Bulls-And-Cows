@@ -8,6 +8,16 @@ namespace BullsAndCowsGame
 
     public static class MessageManager
     {
+        public static void Print(string message)
+        {
+            Console.Write(message);
+        }
+
+        public static void PrintLine(string message)
+        {
+            Print(message + "\r\n");
+        }
+
         public static string WelcomeMessage()
         {
             var result = "Welcome to “Bulls and Cows” game. " +
@@ -41,16 +51,6 @@ namespace BullsAndCowsGame
         public static void NoMoreHelpMessage()
         {
             PrintLine("You are not allowed to ask for more help!");
-        }
-
-        public static void Print(string message)
-        {
-            Console.Write(message);
-        }
-
-        public static void PrintLine(string message)
-        {
-            Console.WriteLine(message);
         }
 
         public static void EnterCommandMessage()
