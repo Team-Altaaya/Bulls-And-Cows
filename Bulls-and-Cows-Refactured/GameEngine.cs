@@ -9,7 +9,7 @@
     public class GameEngine
     {
         private const int NumberLength = 4;
-        public const int MaxCheats = 4;
+        private const int MaxCheats = 4;
         private const int ScoreBoardSize = 5;
         private const int HelpPatternMinDigit = 0;
         private const int HelpPatternMaxDigit = NumberLength - 1;
